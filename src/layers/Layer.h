@@ -103,8 +103,11 @@ class LayerData {
         data.reset();
     }
 
-    // Get the max difference between two Layer Data arrays
+    // Get the cosine similarity between two Layer Data arrays
     template <typename T> float compare(const LayerData& other) const;
+
+    // Get the maximum element-wise difference between two Layer Data arrays
+    template <typename T> float maxDiff(const LayerData& other) const;
 
     // Compare within an Epsilon to ensure layer datas are similar within reason
     template <typename T, typename T_EP = float> bool compareWithin(const LayerData& other, const T_EP epsilon = Config::EPSILON) const;
@@ -266,28 +269,6 @@ template <typename T> float LayerData::compare(const LayerData& other) const {
 
     size_t flat_count = params.flat_count();
 
-
-    
-
-    
-    // //MAXIMUM DIFFERENCE
-    // float max_diff = 0;
-
-    // T* data1 = (T*)data.get();
-    // T* data2 = (T*)other.data.get();
-    // // Recurse as needed into each array
-    // for (std::size_t i = 0; i < flat_count; i++) {
-    //     float curr_diff = fabsf(data1[i] - data2[i]);
-
-    //     // Update our max difference if it is larger
-    //     if (curr_diff > max_diff) {
-    //         max_diff = curr_diff;
-    //     }
-    // }
-
-    // return max_diff;
-
-
     //MODIFIED LENGTH WEIGHTED COSINE SIMILARITY
     double dot_product = 0;
     double a_magnitude_sq = 0;
@@ -314,24 +295,63 @@ template <typename T> float LayerData::compare(const LayerData& other) const {
     return cosine_similarity;
 }
 
+// Get the maximum element-wise difference between two Layer Data arrays
+template <typename T> float LayerData::maxDiff(const LayerData& other) const {
+    LayerParams aParams = getParams();
+    LayerParams bParams = other.getParams();
+
+    // Warn if we are not comparing the same data type
+    if (aParams.elementSize != bParams.elementSize) {
+        throw std::runtime_error("Comparison between two LayerData arrays with different element size (and possibly data types) is not advised (" + std::to_string(aParams.elementSize)
+                  + " and " + std::to_string(bParams.elementSize) + ")\n");
+    }
+    if (aParams.dims.size() != bParams.dims.size()) {
+        throw std::runtime_error("LayerData arrays must have the same number of dimentions");
+    }
+
+    // Ensure each dimention size matches
+    for (std::size_t i = 0; i < aParams.dims.size(); i++) {
+        if (aParams.dims[i] != bParams.dims[i]) {
+            throw std::runtime_error("LayerData arrays must have the same size dimentions to be compared");
+        }
+    }
+
+    size_t flat_count = params.flat_count();
+    
+    //MAXIMUM DIFFERENCE
+    float max_diff = 0;
+
+    T* data1 = (T*)data.get();
+    T* data2 = (T*)other.data.get();
+    // Recurse as needed into each array
+    for (std::size_t i = 0; i < flat_count; i++) {
+        float curr_diff = fabsf(data1[i] - data2[i]);
+
+        // Update our max difference if it is larger
+        if (curr_diff > max_diff) {
+            max_diff = curr_diff;
+        }
+    }
+
+    return max_diff;
+}
+
 // Compare within an Epsilon to ensure layer datas are similar within reason
 template <typename T, typename T_EP> bool LayerData::compareWithin(const LayerData& other, const T_EP epsilon) const {
     return epsilon > compare<T>(other);
 }
 
 template <typename T, typename T_EP> bool LayerData::compareWithinPrint(const LayerData& other, const T_EP epsilon) const {
-    // // MAXDIFF
-    // float max_diff = compare<T>(other);
-    // bool result = (epsilon > compare<T>(other));
+    // MAXDIFF
+    float max_diff = maxDiff<T>(other);
 
-    // std::cout 
-    //     << "Comparing images (max error): " 
-    //     << (result ? "True" : "False")
-    //     << " ("
-    //     << max_diff
-    //     << ")\n";
+    std::cout 
+        << "Element-wise Maximum Error: " 
+        << " ("
+        << max_diff
+        << ")"
+        << std::endl;
     
-    // return result;
 
     //LENGTH WEIGHTED COSINE SIMILARITY
     float cosine_similarity = compare<T>(other);
