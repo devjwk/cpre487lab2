@@ -1,0 +1,173 @@
+[Info]: --- Building Toy Model ---
+[Info]: --- Running Basic Test ---
+Comparing image 0 to itself (max error): 1
+Comparing image 0 to itself (T/F within epsilon 0.001): false
+
+Change a value by 0.1 and compare again
+Element-wise Maximum Error:  (0.1)
+Comparing Outputs (Cosine Similarity): True 99.9962%  (0.999962)
+Change a value by 0.1 and compare again...
+Element-wise Maximum Error:  (0.2)
+Comparing Outputs (Cosine Similarity): True 99.9916%  (0.999916)
+[Info]: --- Running Layer Test 0, image 0 ---
+Timer Layer Inference: elapsed=8.411000ms
+Element-wise Maximum Error:  (2.38419e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 0, image 1 ---
+Timer Layer Inference: elapsed=8.128000ms
+Element-wise Maximum Error:  (3.93949e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 0, image 2 ---
+Timer Layer Inference: elapsed=8.108000ms
+Element-wise Maximum Error:  (3.57628e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 1, image 0 ---
+Timer Layer Inference: elapsed=88.500000ms
+Element-wise Maximum Error:  (7.7486e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 1, image 1 ---
+Timer Layer Inference: elapsed=88.199997ms
+Element-wise Maximum Error:  (4.76837e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 1, image 2 ---
+Timer Layer Inference: elapsed=88.162003ms
+Element-wise Maximum Error:  (5.66244e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 2, image 0 ---
+Timer Layer Inference: elapsed=0.109000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 2, image 1 ---
+Timer Layer Inference: elapsed=0.082000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 2, image 2 ---
+Timer Layer Inference: elapsed=0.082000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 3, image 0 ---
+Timer Layer Inference: elapsed=12.991000ms
+Element-wise Maximum Error:  (4.17233e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 3, image 1 ---
+Timer Layer Inference: elapsed=12.977000ms
+Element-wise Maximum Error:  (2.38419e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 3, image 2 ---
+Timer Layer Inference: elapsed=12.931000ms
+Element-wise Maximum Error:  (3.57628e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 4, image 0 ---
+Timer Layer Inference: elapsed=23.122000ms
+Element-wise Maximum Error:  (7.15256e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 4, image 1 ---
+Timer Layer Inference: elapsed=23.047001ms
+Element-wise Maximum Error:  (3.42727e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 4, image 2 ---
+Timer Layer Inference: elapsed=23.141001ms
+Element-wise Maximum Error:  (3.57628e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 5, image 0 ---
+Timer Layer Inference: elapsed=0.053000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 5, image 1 ---
+Timer Layer Inference: elapsed=0.037000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 5, image 2 ---
+Timer Layer Inference: elapsed=0.031000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 6, image 0 ---
+Timer Layer Inference: elapsed=4.028000ms
+Element-wise Maximum Error:  (9.53674e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 6, image 1 ---
+Timer Layer Inference: elapsed=4.009000ms
+Element-wise Maximum Error:  (5.96046e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 6, image 2 ---
+Timer Layer Inference: elapsed=4.066000ms
+Element-wise Maximum Error:  (7.00355e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 7, image 0 ---
+Timer Layer Inference: elapsed=5.184000ms
+Element-wise Maximum Error:  (8.34465e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 7, image 1 ---
+Timer Layer Inference: elapsed=5.138000ms
+Element-wise Maximum Error:  (7.15256e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 7, image 2 ---
+Timer Layer Inference: elapsed=5.148000ms
+Element-wise Maximum Error:  (9.53674e-07)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 8, image 0 ---
+Timer Layer Inference: elapsed=0.007000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 8, image 1 ---
+Timer Layer Inference: elapsed=0.007000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 8, image 2 ---
+Timer Layer Inference: elapsed=0.007000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 9, image 0 ---
+Timer Layer Inference: elapsed=0.006000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 9, image 1 ---
+Timer Layer Inference: elapsed=0.000000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 9, image 2 ---
+Timer Layer Inference: elapsed=0.000000ms
+Element-wise Maximum Error:  (0)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 10, image 0 ---
+Timer Layer Inference: elapsed=1.716000ms
+Element-wise Maximum Error:  (2.86102e-06)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 10, image 1 ---
+Timer Layer Inference: elapsed=1.464000ms
+Element-wise Maximum Error:  (5.72205e-06)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 10, image 2 ---
+Timer Layer Inference: elapsed=1.456000ms
+Element-wise Maximum Error:  (3.57628e-06)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 11 + 12, image 0 ---
+Timer Layer Inference: elapsed=0.088000ms
+Element-wise Maximum Error:  (5.96046e-08)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 11 + 12, image 1 ---
+Timer Layer Inference: elapsed=0.053000ms
+Element-wise Maximum Error:  (2.23517e-08)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Layer Test 11 + 12, image 2 ---
+Timer Layer Inference: elapsed=0.052000ms
+Element-wise Maximum Error:  (8.9407e-08)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[Info]: --- Running Inference Test, image 0 ---
+Timer Full Inference: elapsed=143.335999ms
+Element-wise Maximum Error:  (4.17233e-07)
+Comparing Outputs (Cosine Similarity): True 99.9999%  (0.999999)
+Predicted class: 170 (confidence 0.729327)
+[Info]: --- Running Inference Test, image 1 ---
+Timer Full Inference: elapsed=143.307007ms
+Element-wise Maximum Error:  (1.71363e-07)
+Comparing Outputs (Cosine Similarity): True 99.9999%  (0.999999)
+Predicted class: 106 (confidence 0.103273)
+[Info]: --- Running Inference Test, image 2 ---
+Timer Full Inference: elapsed=143.246994ms
+Element-wise Maximum Error:  (2.08616e-07)
+Comparing Outputs (Cosine Similarity): True 99.9999%  (0.999999)
+Predicted class: 128 (confidence 0.21062)
+
+
+----- ML::runTests() COMPLETE -----
