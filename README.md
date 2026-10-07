@@ -9,7 +9,7 @@
 
 Iowa State University · CprE 487/587 · Lab 2 · Team 06
 
-[Why](#why) · [Where this lab fits](#where-this-lab-fits) · [Progress](#progress) · [Results](#results) · [Build and run](#build-and-run) · [Limitations](#limitations-and-next-steps)
+[Why](#why) · [Where this lab fits](#where-this-lab-fits) · [Progress](#progress) · [Results](#results) · [Memory and MACs](#memory-and-mac-estimate) · [Build and run](#build-and-run) · [Limitations](#limitations-and-next-steps)
 
 </div>
 
@@ -17,7 +17,7 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 
 > **Where it stands — Layers implemented and verified on the lab PC**  
 > All 13 layers are written and every one of the 12 TensorFlow reference outputs is reproduced for three test images.  
-> Still open: the memory and MAC analysis, the ZedBoard run, and the report.
+> Still open: profiling with perf, the ZedBoard run, and the report.
 
 | Reference outputs matched | Max error, full model | Lab PC, per image | ZedBoard, per image |
 | :---: | :---: | :---: | :---: |
@@ -57,7 +57,7 @@ TensorFlow hides what inference costs. Lab 1 measured the model from the outside
 | Verify each layer against its TensorFlow reference output | done — lab PC, 3 images |
 | Verify whole-model inference | done — lab PC, 3 images |
 | Layer formulas and variable descriptions (handout 3.2) | not started |
-| Memory and MAC estimate per layer (handout 3.3) | not started |
+| Memory and MAC estimate per layer (handout 3.3) | done |
 | Run on the ZedBoard | not started |
 | Report | not started |
 
@@ -91,6 +91,32 @@ The cosine similarity reported by the framework is 100% for every row. TensorFlo
 | 2 German shepherd | 143.2 ms | 2.09 × 10⁻⁷ | 128 (0.21062) | 128 (0.2106) |
 
 The six convolutions take 98.7% of the time and conv2 alone 61.5%, the same layer that dominated the TensorFlow profile in Lab 1.
+
+## Memory and MAC estimate
+
+Calculated from the layer dimensions (handout 3.3); every value is a 32-bit float. A MAC is one multiply-accumulate.
+
+| # | Layer | Output buffer (bytes) | Weights + bias (bytes) | MACs | MAC share | Measured time share |
+|---|---|---|---|---|---|---|
+| 0 | conv1 | 460,800 | 9,728 | 8,640,000 | 6.57% | 5.7% |
+| 1 | **conv2** | 401,408 | 102,528 | **80,281,600** | **61.01%** | **61.5%** |
+| 2 | max pool 1 | 100,352 | 0 | 0 | | 0.1% |
+| 3 | conv3 | 173,056 | 73,984 | 12,460,032 | 9.47% | 9.0% |
+| 4 | conv4 | 147,456 | 147,712 | 21,233,664 | 16.14% | 16.1% |
+| 5 | max pool 2 | 36,864 | 0 | 0 | | 0.0% |
+| 6 | conv5 | 25,600 | 147,712 | 3,686,400 | 2.80% | 2.8% |
+| 7 | conv6 | 32,768 | 295,424 | 4,718,592 | 3.59% | 3.6% |
+| 8 | max pool 3 | 8,192 | 0 | 0 | | 0.0% |
+| 9 | flatten | 8,192 | 0 | 0 | | 0.0% |
+| 10 | **dense1** | 1,024 | **2,098,176** | 524,288 | 0.40% | 1.1% |
+| 11 | dense2 | 800 | 205,600 | 51,200 | 0.04% | 0.0% |
+| 12 | softmax | 800 | 0 | 0 | | 0.0% |
+| | Total | 1,397,312 | 3,080,864 | 131,595,776 | | |
+
+With the 49,152-byte input image the model needs about 4.5 MB, because the framework allocates every layer's output buffer up front. Convolution MACs are output values × kernel height × kernel width × input channels; dense MACs are inputs × outputs.
+
+- **MAC count predicts time.** For all six convolutions the MAC share and the measured time share differ by less than one percentage point.
+- **Memory and compute have different bottlenecks.** dense1 holds 68% of the parameters but does 0.4% of the MACs; conv2 does 61% of the MACs with 3.3% of the parameters.
 
 ## Build and run
 
