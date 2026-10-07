@@ -43,9 +43,10 @@ TensorFlow hides what inference costs. Lab 1 measured the model from the outside
 ## Starting point
 
 - **Framework:** the course template (`course` remote), unmodified. Its own documentation is in [`FRAMEWORK_README.md`](FRAMEWORK_README.md).
-- **Weights:** `data/model/` ships with the template. The files checked so far (`conv1`, `conv2`, `conv6`, `dense1`, `dense2`) are byte-identical to the weights exported in Lab 1, under different names (`conv1_weights.bin` here, `conv2d_weights.bin` there).
-- **Test images:** `data/image_{0,1,2}.bin` are float32 values in [0, 1] (49,152 bytes each). They are the course's images, not the three images used in the Lab 1 re-run.
-- **Reference outputs:** `data/image_N_data/layer_{0..11}_output.bin`, one file per layer.
+- **Weights:** `data/model/` ships with the template. All 16 files are byte-identical to the weights exported in Lab 1, under different names (`conv1_weights.bin` here, `conv2d_weights.bin` there).
+- **Test images:** `data/image_{0,1,2}.bin` are the three images from the Lab 1 re-run (pomegranate, miniskirt, German shepherd), converted from `uint8` to float32 in [0, 1] (49,152 bytes each). They replace the course's sample images.
+- **Reference outputs:** `data/image_N_data/layer_{0..11}_output.bin` are the TensorFlow outputs of the 12 layers for those images, exported in Lab 1.
+- **Import:** `python3 scripts/import_lab1_data.py <lab1_binaries_dir>` regenerates `data/` from a Lab 1 export. The course's original data is still available with `git checkout course/main -- data`.
 
 ## Progress
 
@@ -77,7 +78,7 @@ ZedBoard instructions are in [`FRAMEWORK_README.md`](FRAMEWORK_README.md).
 
 ```
 src/                    framework source; layers are in src/layers/
-data/                   weights, test images and per-layer reference outputs (from the course template)
+data/                   weights, test images and per-layer reference outputs (imported from Lab 1)
 scripts/, zedboard/     ZedBoard build, flash and file-transfer tools
 CprE487_587_Lab2.pdf    lab handout
 FRAMEWORK_README.md     the framework's original README
