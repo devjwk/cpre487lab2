@@ -9,3 +9,4 @@ Packages
 # Remove these when they work
 .vscode/launch.json
 .vscode/tasks.json
+.DS_Store
