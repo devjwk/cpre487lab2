@@ -18,6 +18,9 @@
 
 namespace ML {
 
+// Test images in the data folder: image_0.bin ... image_2.bin
+const std::size_t NUM_TEST_IMAGES = 3;
+
 // Build our ML toy model
 Model buildToyModel(const Path modelPath) {
     Model model;
@@ -45,6 +48,12 @@ Model buildToyModel(const Path modelPath) {
     // --- Conv 2: L2 ---
     // Input shape: 60x60x32
     // Output shape: 56x56x32
+    model.addLayer<ConvolutionalLayer>(
+        LayerParams{sizeof(fp32), {60, 60, 32}},                                    // Input Data
+        LayerParams{sizeof(fp32), {56, 56, 32}},                                    // Output Data
+        LayerParams{sizeof(fp32), {5, 5, 32, 32}, modelPath / "conv2_weights.bin"}, // Weights
+        LayerParams{sizeof(fp32), {32}, modelPath / "conv2_biases.bin"}             // Bias
+    );
 
     // --- MPL 1: L3 ---
     // Input shape: 56x56x32
@@ -122,50 +131,55 @@ void runBasicTest(const Model& model, const Path& basePath) {
     img.compareWithinPrint<fp32>(imgCopy);
 }
 
+// Path of the TensorFlow reference output of a layer for one of the test images
+Path referenceOutputPath(const Path& basePath, const std::size_t imageNum, const std::size_t layerNum) {
+    return basePath / ("image_" + std::to_string(imageNum) + "_data") / ("layer_" + std::to_string(layerNum) + "_output.bin");
+}
+
+// Test one layer by itself: its input is the TensorFlow output of the previous layer (or the image for layer 0),
+// so an error in an earlier layer cannot affect the result
 void runLayerTest(const std::size_t layerNum, const Model& model, const Path& basePath) {
-    // Load an image
-    logInfo(std::string("--- Running Layer Test ") + std::to_string(layerNum) + "---");
+    for (std::size_t imageNum = 0; imageNum < NUM_TEST_IMAGES; imageNum++) {
+        logInfo(std::string("--- Running Layer Test ") + std::to_string(layerNum) + ", image " + std::to_string(imageNum) + " ---");
 
-    // Construct a LayerData object from a LayerParams one
-    // LayerData img(model[layerNum].getInputParams(), test_image_files[layerNum].first);
-    dimVec inDims = {64, 64, 3};
-    LayerData img({sizeof(fp32), inDims, basePath / "image_0.bin"});
-    img.loadData();
+        const Path inputPath = (layerNum == 0) ? basePath / ("image_" + std::to_string(imageNum) + ".bin")
+                                               : referenceOutputPath(basePath, imageNum, layerNum - 1);
+        LayerData input(model[layerNum].getInputParams(), inputPath);
+        input.loadData();
 
-    Timer timer("Layer Inference");
+        Timer timer("Layer Inference");
 
-    // Run inference on the model
-    timer.start();
-    const LayerData& output = model.inferenceLayer(img, layerNum, Layer::InfType::NAIVE);
-    timer.stop();
+        // Run inference on the layer
+        timer.start();
+        const LayerData& output = model.inferenceLayer(input, layerNum, Layer::InfType::NAIVE);
+        timer.stop();
 
-    // Compare the output
-    // Construct a LayerData object from a LayerParams one
-    LayerData expected(output.getParams(), basePath / "image_0_data" / "layer_0_output.bin");
-    expected.loadData();
-    output.compareWithinPrint<fp32>(expected);
+        // Compare the output
+        LayerData expected(output.getParams(), referenceOutputPath(basePath, imageNum, layerNum));
+        expected.loadData();
+        output.compareWithinPrint<fp32>(expected);
+    }
 }
 
 void runInferenceTest(const Model& model, const Path& basePath) {
-    // Load an image
-    logInfo("--- Running Inference Test ---");
+    for (std::size_t imageNum = 0; imageNum < NUM_TEST_IMAGES; imageNum++) {
+        logInfo(std::string("--- Running Inference Test, image ") + std::to_string(imageNum) + " ---");
 
-    // Construct a LayerData object from a LayerParams one
-    LayerData img(model[0].getInputParams(), basePath / "image_0.bin");
-    img.loadData();
+        LayerData img(model[0].getInputParams(), basePath / ("image_" + std::to_string(imageNum) + ".bin"));
+        img.loadData();
 
-    Timer timer("Full Inference");
+        Timer timer("Full Inference");
 
-    // Run inference on the model
-    timer.start();
-    const LayerData& output = model.inference(img, Layer::InfType::NAIVE);
-    timer.stop();
+        // Run inference on the model
+        timer.start();
+        const LayerData& output = model.inference(img, Layer::InfType::NAIVE);
+        timer.stop();
 
-    // Compare the output
-    // Construct a LayerData object from a LayerParams one
-    LayerData expected(model.getOutputLayer().getOutputParams(), basePath / "image_0_data" / "layer_0_output.bin");
-    expected.loadData();
-    output.compareWithinPrint<fp32>(expected);
+        // Compare the output of the last layer built so far with its reference
+        LayerData expected(model.getOutputLayer().getOutputParams(), referenceOutputPath(basePath, imageNum, model.getNumLayers() - 1));
+        expected.loadData();
+        output.compareWithinPrint<fp32>(expected);
+    }
 }
 
 void runTests() {
@@ -179,8 +193,10 @@ void runTests() {
     // Run some framework tests as an example of loading data
     runBasicTest(model, basePath);
 
-    // Run a layer inference test
-    runLayerTest(0, model, basePath);
+    // Run a layer inference test for every layer built so far
+    for (std::size_t layerNum = 0; layerNum < model.getNumLayers(); layerNum++) {
+        runLayerTest(layerNum, model, basePath);
+    }
 
     // Run an end-to-end inference test
     runInferenceTest(model, basePath);
