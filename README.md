@@ -5,7 +5,7 @@
 ![Language](https://img.shields.io/badge/Language-C%2B%2B-1D4ED8?style=flat-square&labelColor=172554)
 ![Build](https://img.shields.io/badge/Build-Make-1E3A8A?style=flat-square&labelColor=172554)
 ![Board](https://img.shields.io/badge/Board-ZedBoard-6366F1?style=flat-square&labelColor=172554)
-![Stage](https://img.shields.io/badge/Stage-Measured%2C%20report%20open-0891B2?style=flat-square&labelColor=172554)
+![Stage](https://img.shields.io/badge/Stage-Complete-0891B2?style=flat-square&labelColor=172554)
 
 Iowa State University · CprE 487/587 · Lab 2 · Team 06
 
@@ -15,9 +15,9 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 
 ---
 
-> **Where it stands — Implemented, verified and timed on x86 and the ZedBoard**  
-> All 13 layers are written and every one of the 12 TensorFlow reference outputs is reproduced for three test images, with identical errors on both platforms.  
-> Still open: the report PDF (a draft exists) and the final submission archive.
+> **Where it stands — Complete**  
+> All 13 layers are written and every one of the 12 TensorFlow reference outputs is reproduced for three test images, with identical errors on x86 and the ZedBoard.  
+> The report and the source folder for submission are in `submission/`.
 
 | Reference outputs matched | Max error, full model | x86, per image | ZedBoard, per image |
 | :---: | :---: | :---: | :---: |
@@ -29,7 +29,7 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 | Team | 2 — Zach Dixon, Jongwoo Kim |
 | This repository | My re-run of Lab 2 from the course framework, checked step by step against the handout. The earlier team source and report are kept in `previous_lab_data/` |
 | Stack | C++, Make, TensorFlow/Keras outputs as the reference, ZedBoard |
-| Deliverables | [Source for submission](submission/lab2_src_06) · report PDF not exported yet |
+| Deliverables | [Lab 2 report (PDF)](submission/lab2_report_06.pdf) · [Source for submission](submission/lab2_src_06) |
 | Related labs | [Lab 1 — TensorFlow baseline](https://github.com/devjwk/cpre487lab1), [Lab 3 — MAC units](https://github.com/devjwk/487lab3), [Lab 4 — quantization](https://github.com/devjwk/cpre487lab4), [Lab 5 — hardware integration](https://github.com/devjwk/cpre487lab5) |
 
 ## Why
@@ -63,7 +63,7 @@ TensorFlow hides what inference costs. Lab 1 measured the model from the outside
 | Profile with perf on x86 | done |
 | Compare with TensorFlow on the same machine | done |
 | Source submission folder, built and tested standalone | done |
-| Report | draft written, PDF not exported yet |
+| Report | done — `submission/lab2_report_06.pdf` |
 
 ## Results
 
