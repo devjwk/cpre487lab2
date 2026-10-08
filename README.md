@@ -28,7 +28,7 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 | This repository | A re-run of Lab 2 from the course framework, checked step by step against the handout. Our original team source and report are kept in `previous_lab_data/` |
 | Stack | C++, Make, TensorFlow/Keras outputs as the reference, ZedBoard |
 | Deliverables | [Lab 2 report (PDF)](submission/lab2_report_06.pdf) · [Source archive (zip)](submission/lab2_src_06.zip) · [Source folder](submission/lab2_src_06) · [Report + source in one archive](submission/lab2_06.zip) |
-| Related labs | [Lab 1 — TensorFlow baseline](https://github.com/devjwk/cpre487lab1), [Lab 3 — MAC units](https://github.com/devjwk/487lab3), [Lab 4 — quantization](https://github.com/devjwk/cpre487lab4), [Lab 5 — hardware integration](https://github.com/devjwk/cpre487lab5) |
+| Related labs | [Lab 1 — TensorFlow baseline](https://github.com/devjwk/cpre487lab1), [Lab 3 — MAC units](https://github.com/devjwk/cpre487lab3), [Lab 4 — quantization](https://github.com/devjwk/cpre487lab4), [Lab 5 — hardware integration](https://github.com/devjwk/cpre487lab5) |
 
 ## Why
 
