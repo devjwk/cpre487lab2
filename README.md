@@ -29,7 +29,7 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 | Team | 2 — Zach Dixon, Jongwoo Kim |
 | This repository | My re-run of Lab 2 from the course framework, checked step by step against the handout. The earlier team source and report are kept in `previous_lab_data/` |
 | Stack | C++, Make, TensorFlow/Keras outputs as the reference, ZedBoard |
-| Deliverables | [Lab 2 report (PDF)](submission/lab2_report_06.pdf) · [Source for submission](submission/lab2_src_06) |
+| Deliverables | [Lab 2 report (PDF)](submission/lab2_report_06.pdf) · [Source archive (zip)](submission/lab2_src_06.zip) · [Source folder](submission/lab2_src_06) |
 | Related labs | [Lab 1 — TensorFlow baseline](https://github.com/devjwk/cpre487lab1), [Lab 3 — MAC units](https://github.com/devjwk/487lab3), [Lab 4 — quantization](https://github.com/devjwk/cpre487lab4), [Lab 5 — hardware integration](https://github.com/devjwk/cpre487lab5) |
 
 ## Why
@@ -199,7 +199,7 @@ The handout asks for `lab2_report_06.pdf` and `lab2_src_06.zip`.
 
 `make_submission.sh` copies `src/`, the `Makefile` and the three Python scripts into `submission/lab2_src_06/`, then builds that copy from scratch in a temporary directory and runs it against `data/`. It fails if the build prints any warning or error, and reports how many of the 41 comparisons pass. The data files are not part of the source archive; the program expects them in `data/` next to the `Makefile`.
 
-`submission/lab2_src_06/` is a copy. Run the script again after any change to `src/`.
+`submission/lab2_src_06/` and `submission/lab2_src_06.zip` are copies. After any change to `src/`, run the script and the `zip` line again.
 
 ## Repository layout
 

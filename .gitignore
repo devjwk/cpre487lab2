@@ -11,4 +11,3 @@ Packages
 .vscode/tasks.json
 .DS_Store
 __pycache__/
-submission/*.zip
