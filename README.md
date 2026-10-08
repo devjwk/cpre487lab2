@@ -5,7 +5,7 @@
 ![Language](https://img.shields.io/badge/Language-C%2B%2B-1D4ED8?style=flat-square&labelColor=172554)
 ![Build](https://img.shields.io/badge/Build-Make-1E3A8A?style=flat-square&labelColor=172554)
 ![Board](https://img.shields.io/badge/Board-ZedBoard-6366F1?style=flat-square&labelColor=172554)
-![Stage](https://img.shields.io/badge/Stage-In%20progress-0891B2?style=flat-square&labelColor=172554)
+![Stage](https://img.shields.io/badge/Stage-Measured%2C%20report%20open-0891B2?style=flat-square&labelColor=172554)
 
 Iowa State University · CprE 487/587 · Lab 2 · Team 06
 
@@ -15,13 +15,13 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 
 ---
 
-> **Where it stands — Layers implemented and verified on the lab PC**  
-> All 13 layers are written and every one of the 12 TensorFlow reference outputs is reproduced for three test images.  
-> Still open: profiling with perf, the ZedBoard run, and the report.
+> **Where it stands — Implemented, verified and timed on x86 and the ZedBoard**  
+> All 13 layers are written and every one of the 12 TensorFlow reference outputs is reproduced for three test images, with identical errors on both platforms.  
+> Still open: perf profiling, a same-machine comparison with TensorFlow, and the report.
 
 | Reference outputs matched | Max error, full model | x86, per image | ZedBoard, per image |
 | :---: | :---: | :---: | :---: |
-| **12 / 12** | **4.17 × 10⁻⁷** | **60 ms** (i7-12700) | **—** |
+| **12 / 12** | **4.17 × 10⁻⁷** | **60 ms** (i7-12700) | **2,272 ms** |
 
 | | |
 |---|---|
@@ -58,7 +58,9 @@ TensorFlow hides what inference costs. Lab 1 measured the model from the outside
 | Verify whole-model inference | done — lab PC, 3 images |
 | Layer formulas and variable descriptions (handout 3.2) | not started |
 | Memory and MAC estimate per layer (handout 3.3) | done |
-| Run on the ZedBoard | not started |
+| Run on the ZedBoard | done |
+| Layer-wise time fraction plot | done |
+| Profile with perf on x86 | not started |
 | Report | not started |
 
 ## Results
@@ -100,7 +102,27 @@ The cosine similarity reported by the framework is 100% for every row. TensorFlo
 
 Five further runs on `co2050-05` gave 58.5–61.5 ms per image (mean 60.2 ms, 15 measurements).
 
-The machine changes the absolute time by a factor of 2.4 but not the picture: the six convolutions take 98% of the time on both, and conv2 alone 58–62%, the same layer that dominated the TensorFlow profile in Lab 1.
+**ZedBoard** (Zynq-7000, bare metal; log in [`results/zedboard_raw.txt`](results/zedboard_raw.txt))
+
+| Layer | ZedBoard (ms) | Share | x86 run A (ms) | Share | Slowdown |
+|---|---|---|---|---|---|
+| conv1 | 209.3 | 9.2% | 5.508 | 8.8% | 38× |
+| **conv2** | **1,355.7** | **59.7%** | **36.068** | **57.7%** | 38× |
+| conv3 | 204.0 | 9.0% | 5.908 | 9.5% | 35× |
+| conv4 | 338.0 | 14.9% | 10.040 | 16.1% | 34× |
+| conv5 | 58.0 | 2.6% | 1.746 | 2.8% | 33× |
+| conv6 | 75.0 | 3.3% | 2.268 | 3.6% | 33× |
+| max pool 1 | 2.0 | 0.1% | 0.072 | 0.1% | 28× |
+| dense1 | 27.0 | 1.2% | 0.831 | 1.3% | 32× |
+| Whole model | 2,272.3 | | 60.2 | | 38× |
+
+The board's timer has 1 ms resolution, so max pool 2 and 3, flatten and dense2 + softmax read as 0 ms. All 36 layer tests and the three inference tests pass on the board with exactly the same maximum errors and predicted classes as on x86.
+
+<img src="assets/layer_time_share.svg" alt="Layer-wise execution time fraction on x86 and the ZedBoard: conv2 takes 57.7% and 59.7%" width="100%">
+
+The chart is drawn from the logs by `python3 scripts/plot_layer_times.py`.
+
+The machine changes the absolute time by a factor of 2.4 between the two x86 runs and 38 between x86 and the board, but not the picture: the six convolutions take 98% of the time on both, and conv2 alone 58–62%, the same layer that dominated the TensorFlow profile in Lab 1.
 
 ## Memory and MAC estimate
 
@@ -141,7 +163,7 @@ ZedBoard instructions are in [`FRAMEWORK_README.md`](FRAMEWORK_README.md).
 
 ```
 src/                    framework source; layers are in src/layers/
-results/                test output from the x86 runs
+results/                test output from the x86 and ZedBoard runs
 data/                   weights, test images and per-layer reference outputs (imported from Lab 1)
 scripts/, zedboard/     ZedBoard build, flash and file-transfer tools
 CprE487_587_Lab2.pdf    lab handout
@@ -161,7 +183,8 @@ assets/                 README banner and figure
 ## Limitations and next steps
 
 <!-- TEMPLATE: extend as the remaining steps are done. -->
-- Not run on the ZedBoard yet; all numbers are from x86 machines.
+- The ZedBoard timer resolves 1 ms, so layers faster than that have no usable time on the board.
+- The file server on the board returns only the first 7,936 bytes of a file, so uploaded data cannot be checked by downloading it; the passing tests on the board are the check.
 - The machine of run B was not recorded. The Lab 1 TensorFlow timings were taken on a different machine than run A, so C++ and TensorFlow times are not yet comparable on one machine.
 - Each timing is the mean of three runs of one unoptimized, single-threaded implementation. The threaded, tiled and SIMD variants only call the naive one.
 - Dense 2 has no reference output of its own (TensorFlow applies softmax inside that layer), so it is only checked together with softmax.
