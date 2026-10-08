@@ -17,7 +17,7 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 
 > **Where it stands — Implemented, verified and timed on x86 and the ZedBoard**  
 > All 13 layers are written and every one of the 12 TensorFlow reference outputs is reproduced for three test images, with identical errors on both platforms.  
-> Still open: perf profiling, a same-machine comparison with TensorFlow, and the report.
+> Still open: a same-machine comparison with TensorFlow, and the report.
 
 | Reference outputs matched | Max error, full model | x86, per image | ZedBoard, per image |
 | :---: | :---: | :---: | :---: |
@@ -60,7 +60,7 @@ TensorFlow hides what inference costs. Lab 1 measured the model from the outside
 | Memory and MAC estimate per layer (handout 3.3) | done |
 | Run on the ZedBoard | done |
 | Layer-wise time fraction plot | done |
-| Profile with perf on x86 | not started |
+| Profile with perf on x86 | done |
 | Report | not started |
 
 ## Results
@@ -123,6 +123,21 @@ The board's timer has 1 ms resolution, so max pool 2 and 3, flatten and dense2 +
 The chart is drawn from the logs by `python3 scripts/plot_layer_times.py`.
 
 The machine changes the absolute time by a factor of 2.4 between the two x86 runs and 38 between x86 and the board, but not the picture: the six convolutions take 98% of the time on both, and conv2 alone 58–62%, the same layer that dominated the TensorFlow profile in Lab 1.
+
+## perf profile (x86)
+
+`perf record --count=100000 ./build/ml` on `co2050-05`, 17,513 samples; report in `results/x86_perf_report.txt`. The profile covers the whole program: 36 layer tests, 3 full inferences, file loading and the output comparisons.
+
+| Function | Share of cycles |
+|---|---|
+| `ConvolutionalLayer::computeNaive` | 97.68% |
+| `DenseLayer::computeNaive` | 1.27% |
+| `LayerData::compare` (test code) | 0.54% |
+| `LayerData::maxDiff` (test code) | 0.23% |
+| `MaxPoolingLayer::computeNaive` | 0.15% |
+| everything else (loader, file I/O, allocation) | 0.13% |
+
+perf reports functions, not layers, and all six convolutions share one function, so it cannot separate conv1 from conv2. It agrees with the timers on the totals: the timers give the six convolutions 98.5% of the layer time and dense1 1.3%. `time ./build/ml` reports 0.403 s real and 0.371 s user for the whole program, which matches 3 × 62.5 ms of layer tests plus 3 × 60.2 ms of full inferences (0.368 s).
 
 ## Memory and MAC estimate
 
