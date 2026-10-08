@@ -1,0 +1,40 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 9  of event 'cpu_atom/cycles/Pu'
+# Event count (approx.): 900000
+#
+# Overhead  Command  Shared Object         Symbol                          
+# ........  .......  ....................  ................................
+#
+    55.56%  ml       ld-linux-x86-64.so.2  [.] _dl_relocate_object_no_relro
+    22.22%  ml       ld-linux-x86-64.so.2  [.] _dl_lookup_symbol_x
+    11.11%  ml       ld-linux-x86-64.so.2  [.] _dl_cache_libcmp
+    11.11%  ml       ld-linux-x86-64.so.2  [.] do_lookup_x
+# Samples: 17K of event 'cpu_core/cycles/Pu'
+# Event count (approx.): 1750400000
+#
+# Overhead  Command  Shared Object              Symbol                                                                                                                                                                                                                                                           
+# ........  .......  .........................  .................................................................................................................................................................................................................................................................
+#
+    97.68%  ml       ml                         [.] ML::ConvolutionalLayer::computeNaive(ML::LayerData const&) const
+     1.27%  ml       ml                         [.] ML::DenseLayer::computeNaive(ML::LayerData const&) const
+     0.54%  ml       ml                         [.] float ML::LayerData::compare<float>(ML::LayerData const&) const
+     0.23%  ml       ml                         [.] float ML::LayerData::maxDiff<float>(ML::LayerData const&) const
+     0.15%  ml       ml                         [.] ML::MaxPoolingLayer::computeNaive(ML::LayerData const&) const
+     0.02%  ml       ld-linux-x86-64.so.2       [.] _dl_lookup_symbol_x
+     0.02%  ml       ld-linux-x86-64.so.2       [.] do_lookup_x
+     0.01%  ml       libc.so.6                  [.] _int_malloc
+     0.01%  ml       libstdc++.so.6.0.29        [.] 0x00000000000d0bff
+     0.01%  ml       ld-linux-x86-64.so.2       [.] _dl_relocate_object_no_relro
+     0.01%  ml       ld-linux-x86-64.so.2       [.] strcmp
+     0.01%  ml       libc.so.6                  [.] _IO_file_open
+     0.01%  ml       libc.so.6                  [.] _IO_setb
+     0.01%  ml       libc.so.6                  [.] _IO_str_init_static_internal
+     0.01%  ml       libc.so.6                  [.] __memmove_avx_unaligned_erms
+     0.01%  ml       libgcc_s-11-20240719.so.1  [.] __cpu_indicator_init
+     0.01%  ml       libm.so.6                  [.] 0x000000000006fbec
+     0.01%  ml       libstdc++.so.6.0.29        [.] __cxxabiv1::__si_class_type_info::__do_dyncast(long, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const
+     0.01%  ml       libstdc++.so.6.0.29        [.] operator new(unsigned long)
