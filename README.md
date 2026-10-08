@@ -17,7 +17,7 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 
 > **Where it stands — Implemented, verified and timed on x86 and the ZedBoard**  
 > All 13 layers are written and every one of the 12 TensorFlow reference outputs is reproduced for three test images, with identical errors on both platforms.  
-> Still open: a same-machine comparison with TensorFlow, and the report.
+> Still open: the layer formulas (handout 3.2) and the report.
 
 | Reference outputs matched | Max error, full model | x86, per image | ZedBoard, per image |
 | :---: | :---: | :---: | :---: |
@@ -61,6 +61,7 @@ TensorFlow hides what inference costs. Lab 1 measured the model from the outside
 | Run on the ZedBoard | done |
 | Layer-wise time fraction plot | done |
 | Profile with perf on x86 | done |
+| Compare with TensorFlow on the same machine | done |
 | Report | not started |
 
 ## Results
@@ -123,6 +124,18 @@ The board's timer has 1 ms resolution, so max pool 2 and 3, flatten and dense2 +
 The chart is drawn from the logs by `python3 scripts/plot_layer_times.py`.
 
 The machine changes the absolute time by a factor of 2.4 between the two x86 runs and 38 between x86 and the board, but not the picture: the six convolutions take 98% of the time on both, and conv2 alone 58–62%, the same layer that dominated the TensorFlow profile in Lab 1.
+
+## C++ vs. TensorFlow on the same machine
+
+Both measured on `co2050-05` (Intel Core i7-12700), CPU only, same three input images. TensorFlow times are the median of 20 runs after a warm-up, from `scripts/tf_inference_time.py`; its outputs match the Lab 1 reference within 2.98 × 10⁻⁷.
+
+| Implementation | Per image | Relative to C++ |
+|---|---|---|
+| This framework, naive C++ (`-O3`, single thread) | 60.2 ms | 1× |
+| TensorFlow, one `model.predict()` call | 34.2 ms | 1.8× faster |
+| TensorFlow, direct `model(x)` call | 7.0–7.3 ms | 8.4× faster |
+
+TensorFlow is faster even through `predict()`, whose per-call overhead is most of its 34 ms. The direct call still includes eager-execution overhead, so the layer arithmetic alone is faster again: the Lab 1 profiler measured about 1.8 ms of model operations per image, on a different machine. TensorFlow runs each convolution as one fused, vectorized oneDNN operation (`_MklNativeFusedConv2D` in the Lab 1 profile), while this framework uses six nested scalar loops.
 
 ## perf profile (x86)
 
@@ -200,7 +213,8 @@ assets/                 README banner and figure
 <!-- TEMPLATE: extend as the remaining steps are done. -->
 - The ZedBoard timer resolves 1 ms, so layers faster than that have no usable time on the board.
 - The file server on the board returns only the first 7,936 bytes of a file, so uploaded data cannot be checked by downloading it; the passing tests on the board are the check.
-- The machine of run B was not recorded. The Lab 1 TensorFlow timings were taken on a different machine than run A, so C++ and TensorFlow times are not yet comparable on one machine.
+- The machine of run B was not recorded, so run A on `co2050-05` is the reference for all comparisons.
+- The TensorFlow layer-only time (about 1.8 ms) comes from the Lab 1 profiler on a different machine; on `co2050-05` only the `predict()` and direct-call times were measured.
 - Each timing is the mean of three runs of one unoptimized, single-threaded implementation. The threaded, tiled and SIMD variants only call the naive one.
 - Dense 2 has no reference output of its own (TensorFlow applies softmax inside that layer), so it is only checked together with softmax.
 - The framework's `compareWithin` returns false for identical data; the tests use `compareWithinPrint` and the maximum error instead.
