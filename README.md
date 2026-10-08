@@ -19,9 +19,7 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 > All 13 layers are written and every one of the 12 TensorFlow reference outputs is reproduced for three test images, with identical errors on x86 and the ZedBoard.  
 > The report and the source folder for submission are in `submission/`.
 
-| Reference outputs matched | Max error, full model | x86, per image | ZedBoard, per image |
-| :---: | :---: | :---: | :---: |
-| **12 / 12** | **4.17 × 10⁻⁷** | **60 ms** (i7-12700) | **2,272 ms** |
+<img src="assets/at_a_glance.svg" alt="At a glance: 12 of 12 layer outputs match TensorFlow; 60 ms per image on x86 and 2,272 ms on the ZedBoard; conv2 takes 58 to 60% of the time; the share of MACs predicts the share of time" width="100%">
 
 | | |
 |---|---|
@@ -42,13 +40,21 @@ TensorFlow hides what inference costs. Lab 1 measured the model from the outside
 
 ## Starting point
 
+<details>
+<summary>What the repository started from: framework, weights, test images</summary>
+
 - **Framework:** the course template (`course` remote), unmodified. Its own documentation is in [`FRAMEWORK_README.md`](FRAMEWORK_README.md).
 - **Weights:** `data/model/` ships with the template. All 16 files are byte-identical to the weights exported in Lab 1, under different names (`conv1_weights.bin` here, `conv2d_weights.bin` there).
 - **Test images:** `data/image_{0,1,2}.bin` are the three images from the Lab 1 re-run (pomegranate, miniskirt, German shepherd), converted from `uint8` to float32 in [0, 1] (49,152 bytes each). They replace the course's sample images.
 - **Reference outputs:** `data/image_N_data/layer_{0..11}_output.bin` are the TensorFlow outputs of the 12 layers for those images, exported in Lab 1.
 - **Import:** `python3 scripts/import_lab1_data.py <lab1_binaries_dir>` regenerates `data/` from a Lab 1 export. The course's original data is still available with `git checkout course/main -- data`.
 
+</details>
+
 ## Progress
+
+<details>
+<summary>Checklist of the lab steps (all done)</summary>
 
 | Step | Status |
 |---|---|
@@ -64,6 +70,8 @@ TensorFlow hides what inference costs. Lab 1 measured the model from the outside
 | Compare with TensorFlow on the same machine | done |
 | Source submission folder, built and tested standalone | done |
 | Report | done — `submission/lab2_report_06.pdf` |
+
+</details>
 
 ## Results
 
@@ -140,6 +148,9 @@ TensorFlow is faster even through `predict()`, whose per-call overhead is most o
 
 ## perf profile (x86)
 
+<details>
+<summary>perf results by function</summary>
+
 `perf record --count=100000 ./build/ml` on `co2050-05`, 17,513 samples; report in `results/x86_perf_report.txt`. The profile covers the whole program: 36 layer tests, 3 full inferences, file loading and the output comparisons.
 
 | Function | Share of cycles |
@@ -152,6 +163,8 @@ TensorFlow is faster even through `predict()`, whose per-call overhead is most o
 | everything else (loader, file I/O, allocation) | 0.13% |
 
 perf reports functions, not layers, and all six convolutions share one function, so it cannot separate conv1 from conv2. It agrees with the timers on the totals: the timers give the six convolutions 98.5% of the layer time and dense1 1.3%. `time ./build/ml` reports 0.403 s real and 0.371 s user for the whole program, which matches 3 × 62.5 ms of layer tests plus 3 × 60.2 ms of full inferences (0.368 s).
+
+</details>
 
 ## Memory and MAC estimate
 
@@ -181,6 +194,9 @@ With the 49,152-byte input image the model needs about 4.5 MB, because the frame
 
 ## Build and run
 
+<details>
+<summary>Commands</summary>
+
 ```bash
 make build      # 'make help' lists all targets; run 'make clean' first after changing a header
 ./build/ml      # runs the framework's checks
@@ -188,7 +204,12 @@ make build      # 'make help' lists all targets; run 'make clean' first after ch
 
 ZedBoard instructions are in [`FRAMEWORK_README.md`](FRAMEWORK_README.md).
 
+</details>
+
 ## Submission
+
+<details>
+<summary>How the submission files are made and checked</summary>
 
 The handout asks for `lab2_report_06.pdf` and `lab2_src_06.zip`.
 
@@ -201,7 +222,12 @@ The handout asks for `lab2_report_06.pdf` and `lab2_src_06.zip`.
 
 `submission/lab2_src_06/`, `submission/lab2_src_06.zip` and `submission/lab2_06.zip` (report plus source folder, kept for convenience; the handout does not ask for it) are copies. After any change to `src/`, run the script and the `zip` line again.
 
+</details>
+
 ## Repository layout
+
+<details>
+<summary>Folders and files</summary>
 
 ```
 src/                    framework source; layers are in src/layers/
@@ -214,6 +240,8 @@ FRAMEWORK_README.md     the framework's original README
 previous_lab_data/      first team implementation (src/), its report, and the README of the old repository
 assets/                 README banner and figure
 ```
+
+</details>
 
 ## My role
 
