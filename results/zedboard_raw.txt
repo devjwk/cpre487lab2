@@ -1,0 +1,301 @@
+make: Entering directory '/home/jwk0425/jwk_personal_lab/lab2/cpre487-587-dnn-framework/workspace/mlp/Debug'
+make: 'mlp.elf' is up to date.
+make: Leaving directory '/home/jwk0425/jwk_personal_lab/lab2/cpre487-587-dnn-framework/workspace/mlp/Debug'
+Connecting to hardware server
+No hardware server running, starting a local hardware server instead
+attempting to launch hw_server
+
+****** Xilinx hw_server v2020.1
+  **** Build date : May 27 2020 at 20:33:44
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+Flashing fpga
+INFO: [Hsi 55-2053] elapsed time for repository (/remote/Xilinx/2020.1/Vitis/2020.1/data/embeddedsw) loading 1 seconds
+Done
+Reading from UART, press Ctrl-C to stop
+[[36mInfo[39m]: --- Building Toy Model ---
+xsdb% Opened binary file data/model/conv1_weights.bin
+xsdb% Opened binary file data/model/conv1_biases.bin
+xsdb% Opened binary file data/model/conv2_weights.bin
+xsdb% Opened binary file data/model/conv2_biases.bin
+xsdb% Opened binary file data/model/conv3_weights.bin
+xsdb% Opened binary file data/model/conv3_biases.bin
+xsdb% Opened binary file data/model/conv4_weights.bin
+xsdb% Opened binary file data/model/conv4_biases.bin
+xsdb% Opened binary file data/model/conv5_weights.bin
+xsdb% Opened binary file data/model/conv5_biases.bin
+xsdb% Opened binary file data/model/conv6_weights.bin
+xsdb% Opened binary file data/model/conv6_biases.bin
+xsdb% Opened binary file data/model/dense1_weights.bin
+xsdb% Opened binary file data/model/dense1_biases.bin
+xsdb% Opened binary file data/model/dense2_weights.bin
+xsdb% Opened binary file data/model/dense2_biases.bin
+xsdb% [[36mInfo[39m]: --- Running Basic Test ---
+xsdb% Opened binary file ./data/image_0.bin
+xsdb% Comparing image 0 to itself (max error): 1
+xsdb% Comparing image 0 to itself (T/F within epsilon 0.001): false
+
+Change a value by 0.1 and compare again
+xsdb% Element-wise Maximum Error:  (0.1)
+xsdb% Comparing Outputs (Cosine Similarity): True 99.9962%  (0.999962)
+Change a value by 0.1 and compare again...
+xsdb% Element-wise Maximum Error:  (0.2)
+xsdb% Comparing Outputs (Cosine Similarity): True 99.9916%  (0.999916)
+[[36mInfo[39m]: --- Running Layer Test 0, image 0 ---
+xsdb% Opened binary file data/image_0.bin
+xsdb% Timer Layer Inference: elapsed=209.000000ms
+xsdb% Opened binary file data/image_0_data/layer_0_output.bin
+xsdb% Element-wise Maximum Error:  (2.38419e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 0, image 1 ---
+xsdb% Opened binary file data/image_1.bin
+xsdb% Timer Layer Inference: elapsed=210.000000ms
+xsdb% Opened binary file data/image_1_data/layer_0_output.bin
+xsdb% Element-wise Maximum Error:  (3.93949e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 0, image 2 ---
+xsdb% Opened binary file data/image_2.bin
+xsdb% Timer Layer Inference: elapsed=209.000000ms
+xsdb% Opened binary file data/image_2_data/layer_0_output.bin
+xsdb% Element-wise Maximum Error:  (3.57628e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 1, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_0_output.bin
+xsdb% Timer Layer Inference: elapsed=1356.000000ms
+xsdb% Opened binary file data/image_0_data/layer_1_output.bin
+xsdb% Element-wise Maximum Error:  (7.7486e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 1, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_0_output.bin
+xsdb% Timer Layer Inference: elapsed=1356.000000ms
+xsdb% Opened binary file data/image_1_data/layer_1_output.bin
+xsdb% Element-wise Maximum Error:  (4.76837e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 1, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_0_output.bin
+xsdb% Timer Layer Inference: elapsed=1355.000000ms
+xsdb% Opened binary file data/image_2_data/layer_1_output.bin
+xsdb% Element-wise Maximum Error:  (5.66244e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 2, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_1_output.bin
+xsdb% Timer Layer Inference: elapsed=2.000000ms
+xsdb% Opened binary file data/image_0_data/layer_2_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 2, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_1_output.bin
+xsdb% Timer Layer Inference: elapsed=2.000000ms
+xsdb% Opened binary file data/image_1_data/layer_2_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 2, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_1_output.bin
+xsdb% Timer Layer Inference: elapsed=2.000000ms
+xsdb% Opened binary file data/image_2_data/layer_2_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 3, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_2_output.bin
+xsdb% Timer Layer Inference: elapsed=204.000000ms
+xsdb% Opened binary file data/image_0_data/layer_3_output.bin
+xsdb% Element-wise Maximum Error:  (4.17233e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 3, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_2_output.bin
+xsdb% Timer Layer Inference: elapsed=204.000000ms
+xsdb% Opened binary file data/image_1_data/layer_3_output.bin
+xsdb% Element-wise Maximum Error:  (2.38419e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 3, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_2_output.bin
+xsdb% Timer Layer Inference: elapsed=204.000000ms
+xsdb% Opened binary file data/image_2_data/layer_3_output.bin
+xsdb% Element-wise Maximum Error:  (3.57628e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 4, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_3_output.bin
+xsdb% Timer Layer Inference: elapsed=338.000000ms
+xsdb% Opened binary file data/image_0_data/layer_4_output.bin
+xsdb% Element-wise Maximum Error:  (7.15256e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 4, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_3_output.bin
+xsdb% Timer Layer Inference: elapsed=338.000000ms
+xsdb% Opened binary file data/image_1_data/layer_4_output.bin
+xsdb% Element-wise Maximum Error:  (3.42727e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 4, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_3_output.bin
+xsdb% Timer Layer Inference: elapsed=338.000000ms
+xsdb% Opened binary file data/image_2_data/layer_4_output.bin
+xsdb% Element-wise Maximum Error:  (3.57628e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 5, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_4_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_0_data/layer_5_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 5, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_4_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_1_data/layer_5_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 5, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_4_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_2_data/layer_5_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 6, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_5_output.bin
+xsdb% Timer Layer Inference: elapsed=58.000000ms
+xsdb% Opened binary file data/image_0_data/layer_6_output.bin
+xsdb% Element-wise Maximum Error:  (9.53674e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 6, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_5_output.bin
+xsdb% Timer Layer Inference: elapsed=58.000000ms
+xsdb% Opened binary file data/image_1_data/layer_6_output.bin
+xsdb% Element-wise Maximum Error:  (5.96046e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 6, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_5_output.bin
+xsdb% Timer Layer Inference: elapsed=58.000000ms
+xsdb% Opened binary file data/image_2_data/layer_6_output.bin
+xsdb% Element-wise Maximum Error:  (7.00355e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 7, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_6_output.bin
+xsdb% Timer Layer Inference: elapsed=75.000000ms
+xsdb% Opened binary file data/image_0_data/layer_7_output.bin
+xsdb% Element-wise Maximum Error:  (8.34465e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 7, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_6_output.bin
+xsdb% Timer Layer Inference: elapsed=75.000000ms
+xsdb% Opened binary file data/image_1_data/layer_7_output.bin
+xsdb% Element-wise Maximum Error:  (7.15256e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 7, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_6_output.bin
+xsdb% Timer Layer Inference: elapsed=75.000000ms
+xsdb% Opened binary file data/image_2_data/layer_7_output.bin
+xsdb% Element-wise Maximum Error:  (9.53674e-07)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 8, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_7_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_0_data/layer_8_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 8, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_7_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_1_data/layer_8_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 8, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_7_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_2_data/layer_8_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 9, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_8_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_0_data/layer_9_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 9, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_8_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_1_data/layer_9_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 9, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_8_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_2_data/layer_9_output.bin
+xsdb% Element-wise Maximum Error:  (0)
+xsdb% Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 10, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_9_output.bin
+xsdb% Timer Layer Inference: elapsed=27.000000ms
+xsdb% Opened binary file data/image_0_data/layer_10_output.bin
+xsdb% Element-wise Maximum Error:  (2.86102e-06)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 10, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_9_output.bin
+xsdb% Timer Layer Inference: elapsed=27.000000ms
+xsdb% Opened binary file data/image_1_data/layer_10_output.bin
+xsdb% Element-wise Maximum Error:  (5.72205e-06)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 10, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_9_output.bin
+xsdb% Timer Layer Inference: elapsed=27.000000ms
+xsdb% Opened binary file data/image_2_data/layer_10_output.bin
+xsdb% Element-wise Maximum Error:  (3.57628e-06)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 11 + 12, image 0 ---
+xsdb% Opened binary file data/image_0_data/layer_10_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_0_data/layer_11_output.bin
+xsdb% Element-wise Maximum Error:  (5.96046e-08)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 11 + 12, image 1 ---
+xsdb% Opened binary file data/image_1_data/layer_10_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_1_data/layer_11_output.bin
+xsdb% Element-wise Maximum Error:  (2.23517e-08)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Layer Test 11 + 12, image 2 ---
+xsdb% Opened binary file data/image_2_data/layer_10_output.bin
+xsdb% Timer Layer Inference: elapsed=0.000000ms
+xsdb% Opened binary file data/image_2_data/layer_11_output.bin
+xsdb% Element-wise Maximum Error:  (8.9407e-08)
+Comparing Outputs (Cosine Similarity): True 100%  (1)
+[[36mInfo[39m]: --- Running Inference Test, image 0 ---
+xsdb% Opened binary file data/image_0.bin
+xsdb% Timer Full Inference: elapsed=2272.000000ms
+xsdb% Opened binary file data/image_0_data/layer_11_output.bin
+xsdb% Element-wise Maximum Error:  (4.17233e-07)
+Comparing Outputs (Cosine Similarity): True 99.9999%  (0.999999)
+Predicted class: 170 (confidence 0.729327)
+[[36mInfo[39m]: --- Running Inference Test, image 1 ---
+xsdb% Opened binary file data/image_1.bin
+xsdb% Timer Full Inference: elapsed=2275.000000ms
+xsdb% Opened binary file data/image_1_data/layer_11_output.bin
+xsdb% Element-wise Maximum Error:  (1.71363e-07)
+Comparing Outputs (Cosine Similarity): True 99.9999%  (0.999999)
+Predicted class: 106 (confidence 0.103273)
+[[36mInfo[39m]: --- Running Inference Test, image 2 ---
+xsdb% Opened binary file data/image_2.bin
+xsdb% Timer Full Inference: elapsed=2270.000000ms
+xsdb% Opened binary file data/image_2_data/layer_11_output.bin
+xsdb% Element-wise Maximum Error:  (2.08616e-07)
+Comparing Outputs (Cosine Similarity): True 99.9999%  (0.999999)
+Predicted class: 128 (confidence 0.21062)
+
+
+----- ML::runTests() COMPLETE -----
+
+
+----- STARTING FILE TRANSFER SERVER -----
+IP:      192.168.1.2
+Netmask: 255.255.255.0
+Gateway: 192.168.1.1
+MAC:     00:0A:35:00:01:02
+xsdb% Start PHY autonegotiation 
+xsdb% Waiting for PHY to complete autonegotiation.
+xsdb% autonegotiation complete 
+xsdb% link speed for phy address 0: 1000
+xsdb% HTTP file server started!
+xsdb% 
