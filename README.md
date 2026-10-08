@@ -19,9 +19,9 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 > All 13 layers are written and every one of the 12 TensorFlow reference outputs is reproduced for three test images.  
 > Still open: profiling with perf, the ZedBoard run, and the report.
 
-| Reference outputs matched | Max error, full model | Lab PC, per image | ZedBoard, per image |
+| Reference outputs matched | Max error, full model | x86, per image | ZedBoard, per image |
 | :---: | :---: | :---: | :---: |
-| **12 / 12** | **4.17 × 10⁻⁷** | **143 ms** | **—** |
+| **12 / 12** | **4.17 × 10⁻⁷** | **60 ms** (i7-12700) | **—** |
 
 | | |
 |---|---|
@@ -63,40 +63,50 @@ TensorFlow hides what inference costs. Lab 1 measured the model from the outside
 
 ## Results
 
-Measured on the lab PC (g++ `-O3`, single thread); full output in [`results/x86_run.txt`](results/x86_run.txt). Each layer is tested alone: its input is the TensorFlow output of the previous layer, so errors cannot carry over. Error is the largest element-wise difference over the three test images; time is the mean of the three.
+Two runs of the same binary (g++ `-O3`, single thread), on two machines:
 
-| # | Layer | Output | Max error vs. TensorFlow | Time (ms) | Share |
-|---|---|---|---|---|---|
-| 0 | conv1 5×5 | 60×60×32 | 3.94 × 10⁻⁷ | 8.216 | 5.7% |
-| 1 | **conv2 5×5** | 56×56×32 | 7.75 × 10⁻⁷ | **88.287** | **61.5%** |
-| 2 | max pool 1 | 28×28×32 | 0 | 0.091 | 0.1% |
-| 3 | conv3 3×3 | 26×26×64 | 4.17 × 10⁻⁷ | 12.966 | 9.0% |
-| 4 | conv4 3×3 | 24×24×64 | 7.15 × 10⁻⁷ | 23.103 | 16.1% |
-| 5 | max pool 2 | 12×12×64 | 0 | 0.040 | 0.0% |
-| 6 | conv5 3×3 | 10×10×64 | 9.54 × 10⁻⁷ | 4.034 | 2.8% |
-| 7 | conv6 3×3 | 8×8×128 | 9.54 × 10⁻⁷ | 5.157 | 3.6% |
-| 8 | max pool 3 | 4×4×128 | 0 | 0.007 | 0.0% |
-| 9 | flatten | 2048 | 0 | 0.002 | 0.0% |
-| 10 | dense1 | 256 | 5.72 × 10⁻⁶ | 1.545 | 1.1% |
-| 11 + 12 | dense2 + softmax | 200 | 8.94 × 10⁻⁸ | 0.064 | 0.0% |
+| Run | Machine | Log |
+|---|---|---|
+| A | `co2050-05`, Intel Core i7-12700 | [`results/x86_co2050_run.txt`](results/x86_co2050_run.txt) |
+| B | host not recorded in the log | [`results/x86_run.txt`](results/x86_run.txt) |
+
+Each layer is tested alone: its input is the TensorFlow output of the previous layer, so errors cannot carry over. Error is the largest element-wise difference over the three test images and is identical in both runs; time is the mean of the three images.
+
+| # | Layer | Output | Max error vs. TensorFlow | Run A (ms) | Share | Run B (ms) | Share |
+|---|---|---|---|---|---|---|---|
+| 0 | conv1 5×5 | 60×60×32 | 3.94 × 10⁻⁷ | 5.508 | 8.8% | 8.216 | 5.7% |
+| 1 | **conv2 5×5** | 56×56×32 | 7.75 × 10⁻⁷ | **36.068** | **57.7%** | **88.287** | **61.5%** |
+| 2 | max pool 1 | 28×28×32 | 0 | 0.072 | 0.1% | 0.091 | 0.1% |
+| 3 | conv3 3×3 | 26×26×64 | 4.17 × 10⁻⁷ | 5.908 | 9.5% | 12.966 | 9.0% |
+| 4 | conv4 3×3 | 24×24×64 | 7.15 × 10⁻⁷ | 10.040 | 16.1% | 23.103 | 16.1% |
+| 5 | max pool 2 | 12×12×64 | 0 | 0.026 | 0.0% | 0.040 | 0.0% |
+| 6 | conv5 3×3 | 10×10×64 | 9.54 × 10⁻⁷ | 1.746 | 2.8% | 4.034 | 2.8% |
+| 7 | conv6 3×3 | 8×8×128 | 9.54 × 10⁻⁷ | 2.268 | 3.6% | 5.157 | 3.6% |
+| 8 | max pool 3 | 4×4×128 | 0 | 0.004 | 0.0% | 0.007 | 0.0% |
+| 9 | flatten | 2048 | 0 | 0.000 | 0.0% | 0.002 | 0.0% |
+| 10 | dense1 | 256 | 5.72 × 10⁻⁶ | 0.831 | 1.3% | 1.545 | 1.1% |
+| 11 + 12 | dense2 + softmax | 200 | 8.94 × 10⁻⁸ | 0.024 | 0.0% | 0.064 | 0.0% |
+| | Sum of layers | | | 62.496 | | 143.512 | |
 
 The cosine similarity reported by the framework is 100% for every row. TensorFlow's last layer includes the softmax, so dense2 and softmax are tested together against that one reference.
 
 **Whole model, image in to class probabilities out**
 
-| Image | Time | Max error | Predicted class (confidence) | TensorFlow in Lab 1 |
-|---|---|---|---|---|
-| 0 pomegranate | 143.3 ms | 4.17 × 10⁻⁷ | 170 (0.729327) | 170 (0.7293) |
-| 1 miniskirt | 143.3 ms | 1.71 × 10⁻⁷ | 106 (0.103273) | 106 (0.1033) |
-| 2 German shepherd | 143.2 ms | 2.09 × 10⁻⁷ | 128 (0.21062) | 128 (0.2106) |
+| Image | Run A | Run B | Max error | Predicted class (confidence) | TensorFlow in Lab 1 |
+|---|---|---|---|---|---|
+| 0 pomegranate | 61.2 ms | 143.3 ms | 4.17 × 10⁻⁷ | 170 (0.729327) | 170 (0.7293) |
+| 1 miniskirt | 60.4 ms | 143.3 ms | 1.71 × 10⁻⁷ | 106 (0.103273) | 106 (0.1033) |
+| 2 German shepherd | 59.2 ms | 143.2 ms | 2.09 × 10⁻⁷ | 128 (0.21062) | 128 (0.2106) |
 
-The six convolutions take 98.7% of the time and conv2 alone 61.5%, the same layer that dominated the TensorFlow profile in Lab 1.
+Five further runs on `co2050-05` gave 58.5–61.5 ms per image (mean 60.2 ms, 15 measurements).
+
+The machine changes the absolute time by a factor of 2.4 but not the picture: the six convolutions take 98% of the time on both, and conv2 alone 58–62%, the same layer that dominated the TensorFlow profile in Lab 1.
 
 ## Memory and MAC estimate
 
 Calculated from the layer dimensions (handout 3.3); every value is a 32-bit float. A MAC is one multiply-accumulate.
 
-| # | Layer | Output buffer (bytes) | Weights + bias (bytes) | MACs | MAC share | Measured time share |
+| # | Layer | Output buffer (bytes) | Weights + bias (bytes) | MACs | MAC share | Measured time share (run B) |
 |---|---|---|---|---|---|---|
 | 0 | conv1 | 460,800 | 9,728 | 8,640,000 | 6.57% | 5.7% |
 | 1 | **conv2** | 401,408 | 102,528 | **80,281,600** | **61.01%** | **61.5%** |
@@ -131,7 +141,7 @@ ZedBoard instructions are in [`FRAMEWORK_README.md`](FRAMEWORK_README.md).
 
 ```
 src/                    framework source; layers are in src/layers/
-results/                test output from the lab PC
+results/                test output from the x86 runs
 data/                   weights, test images and per-layer reference outputs (imported from Lab 1)
 scripts/, zedboard/     ZedBoard build, flash and file-transfer tools
 CprE487_587_Lab2.pdf    lab handout
@@ -151,7 +161,8 @@ assets/                 README banner and figure
 ## Limitations and next steps
 
 <!-- TEMPLATE: extend as the remaining steps are done. -->
-- Not run on the ZedBoard yet; all numbers are from the lab PC.
+- Not run on the ZedBoard yet; all numbers are from x86 machines.
+- The machine of run B was not recorded. The Lab 1 TensorFlow timings were taken on a different machine than run A, so C++ and TensorFlow times are not yet comparable on one machine.
 - Each timing is the mean of three runs of one unoptimized, single-threaded implementation. The threaded, tiled and SIMD variants only call the naive one.
 - Dense 2 has no reference output of its own (TensorFlow applies softmax inside that layer), so it is only checked together with softmax.
 - The framework's `compareWithin` returns false for identical data; the tests use `compareWithinPrint` and the maximum error instead.
