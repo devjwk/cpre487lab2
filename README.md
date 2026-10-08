@@ -23,9 +23,9 @@ Iowa State University · CprE 487/587 · Lab 2 · Team 06
 
 | | |
 |---|---|
-| Period | Original team submission September 2026 · individual re-run started October 7, 2026 |
+| Period | Original team submission September 2026 · re-run October 7, 2026 |
 | Team | 2 — Zach Dixon, Jongwoo Kim |
-| This repository | My re-run of Lab 2 from the course framework, checked step by step against the handout. The earlier team source and report are kept in `previous_lab_data/` |
+| This repository | A re-run of Lab 2 from the course framework, checked step by step against the handout. Our original team source and report are kept in `previous_lab_data/` |
 | Stack | C++, Make, TensorFlow/Keras outputs as the reference, ZedBoard |
 | Deliverables | [Lab 2 report (PDF)](submission/lab2_report_06.pdf) · [Source archive (zip)](submission/lab2_src_06.zip) · [Source folder](submission/lab2_src_06) · [Report + source in one archive](submission/lab2_06.zip) |
 | Related labs | [Lab 1 — TensorFlow baseline](https://github.com/devjwk/cpre487lab1), [Lab 3 — MAC units](https://github.com/devjwk/487lab3), [Lab 4 — quantization](https://github.com/devjwk/cpre487lab4), [Lab 5 — hardware integration](https://github.com/devjwk/cpre487lab5) |
@@ -243,17 +243,14 @@ assets/                 README banner and figure
 
 </details>
 
-## My role
+## Team and credits
 
-<!-- TEMPLATE: write this yourself once the work is done. -->
-
-## What I learned
-
-<!-- TEMPLATE: write this yourself once the work is done. -->
+- **Original lab (September 2026):** done together by Zach Dixon and Jongwoo Kim. Zach built the timing and logging structure; Jongwoo worked on the layer implementation and the performance measurements. That source and report are kept in `previous_lab_data/`, and the original repository is [devjwk/487lab2](https://github.com/devjwk/487lab2).
+- **Re-run (October 2026):** Jongwoo rewrote the layers from the unmodified course framework and measured again on x86 and the ZedBoard, using the test images from the Lab 1 re-run.
+- Both of us have write access. Corrections and additions are welcome.
 
 ## Limitations and next steps
 
-<!-- TEMPLATE: extend as the remaining steps are done. -->
 - The ZedBoard timer resolves 1 ms, so layers faster than that have no usable time on the board.
 - The file server on the board returns only the first 7,936 bytes of a file, so uploaded data cannot be checked by downloading it; the passing tests on the board are the check.
 - The machine of run B was not recorded, so run A on `co2050-05` is the reference for all comparisons.
